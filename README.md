@@ -1,10 +1,10 @@
 # MADlibs
 Entertaining interactive word plays
 
-You should already have cloned the repo to your local system. Now checkout the current branch.
+Fork the project and then clone it to your drive.
+Make the updates to the html file to create your own personal MADlib.
 
-git checkout step5-differentValidationAndMore
+Have fun!
 
-Step 5:
-
-Using the warning paragraph for validation, cursor changes, and focus/blur.
+Develop a narrative theme and create the associated artwork.
+Demonstrate your create design skills with CSS and images.
