@@ -24,8 +24,16 @@ reseting the form to try again
     <meta charset="UTF-8">
     <style>
         div {
-            border: 1px solid red;
-            background-color: #c7af90;
+            border: 5px solid #ffb733;
+            background-color: #acf2ef;
+        }
+
+        p {
+          padding-left: 10px;
+        }
+
+        h1 {
+          padding-left: 10px;
         }
 
         .displayNone {
@@ -40,15 +48,21 @@ reseting the form to try again
 
 <body>
     <div id="inputPanel">
-        <h3>A few questions for you</h3>
-        <p>A first name:
+        <h1>A few questions for you</h1>
+        <p>Your name:
             <input id="firstName" type="text" placeholder="first name">
         </p>
         <p>Your favorite color:
             <input id="favColor" type="text" placeholder="favorite color">
         </p>
-        <p>Place:
+        <p>Your weapon of choice:
+            <input id="weapon" type="text" placeholder="weapon choice">
+        </p>
+        <p>A place:
             <input id="place" type="text" placeholder="place">
+        </p>
+        <p>A creature or animal:
+            <input id="creature" type="text" placeholder="creature">
         </p>
         <button id="submit">Submit your answers</button>
         <p id="warning">Please answer all questions.</p>
@@ -70,32 +84,95 @@ reseting the form to try again
         var again = document.querySelector("#again");
         again.addEventListener("click", resetPage, false);
 
-        document.querySelector('#firstName').focus();
+        document.querySelector("#firstName").focus();
 
-        var firstName = document.querySelector('#firstName');
+        var firstName = document.querySelector("#firstName");
         var favColor = document.querySelector("#favColor");
-        var place = document.querySelector('#place');
+        var weapon = document.querySelector("#weapon");
+        var place = document.querySelector("#place");
+        var creature = document.querySelector("#creature")
         var theStory = document.querySelector("#theStory");
 
         window.addEventListener("keydown", keydownHandler, false);
 
-        function keydownHandler(event) {
-            console.log("Enter key pressed");
+        firstName.focus();
 
+        inputPanel.className = "displayBlock";
+        outputPanel.className = "displayNone";
+        warning.className = "displayNone";
+
+        function keydownHandler(event) {
+          if (event.keyCode === 13) {
+              console.log("Enter key pressed");
+              writestory();
+          }
         }
 
         function checkComplete() {
             //verify the user filled in the form
-
+            var warningText = "Please provide: ";
+            var warningArray = [];
+            if (firstName.value == "") {
+                warningArray.push("Name");
+            }
+            if (favColor.value == "") {
+                warningArray.push("Color");
+            }
+            if (weapon.value == "") {
+                warningArray.push("Weapon");
+            }
+            if (creature.value == "") {
+                warningArray.push("Creature");
+            }
+            if (place.value == "") {
+                warningArray.push("Place");
+            }
+            if (warningArray.length !== 0) {
+                warningText += warningArray.join(", ");
+                warning.innerHTML = warningText;
+                return false;
+            } else {
+                return true;
+            }
         }
 
         function writeStory() {
             //grab the input values to write the story
+            if (checkComplete() == true) { //remember checkComplete is the form validation
+                //grab the input values to write the story
+                //setting finishedStory to an empty string will guarantee
+                //it shows up empty each time the user enters a story
+                var finishedStory = "";
+                finishedStory += "<p>This is the story of " + firstName.value + ". ";
+                finishedStory += "<p>With their amazing " + favColor.value + " cape on their back, they set out on their journey.</p>";
+                finishedStory += "<p>They are headed to " + place.value + " to fight a great creature.</p>";
+                finishedStory += "<p>What they will be fighting is the great and mighty " + creature.value + ".</p>"
+                finishedStory += "<p>And at their side is their trusty " + weapon.value + " with which they will use to slay the beast.</p>"
+                //do not add too many items in a single line or the code likes to break
+                theStory.innerHTML = finishedStory;
 
+                inputPanel.className = "displayNone";
+                outputPanel.className = "displayBlock";
+                warning.className = "displayNone";
+
+            } else {
+                console.log("the form was not complete");
+                warning.className = "displayBlock";
+            }
         }
 
         function resetPage() {
             //put stuff here to reset the page so the user can try again
+            inputPanel.className = "displayBlock";
+            outputPanel.className = "displayNone";
+            warning.className = "displayNone";
+            firstName.value = "";
+            favColor.value = "";
+            weapon.value = "";
+            creature.value = "";
+            place.value = "";
+
+            firstName.focus();
 
         }
     </script>
